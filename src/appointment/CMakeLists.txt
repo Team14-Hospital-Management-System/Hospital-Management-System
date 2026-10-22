@@ -1,0 +1,2 @@
+add_library(hms_appointment AppointmentManager.cpp)
+target_link_libraries(hms_appointment PUBLIC hms_common hms_patient hms_doctor)

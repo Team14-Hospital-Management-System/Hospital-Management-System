@@ -1,0 +1,2 @@
+add_library(hms_report ReportManager.cpp)
+target_link_libraries(hms_report PUBLIC hms_common hms_patient hms_doctor hms_appointment hms_billing)

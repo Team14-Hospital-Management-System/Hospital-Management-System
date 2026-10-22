@@ -1,0 +1,20 @@
+# One executable + one CTest entry per module. All entries exist from day one,
+# so nobody needs to edit this file: just fill in tests/test_<module>.cpp.
+function(hms_add_test name)
+  add_executable(test_${name} test_${name}.cpp)
+  target_link_libraries(test_${name} PRIVATE ${ARGN})
+  target_include_directories(test_${name} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+  add_test(NAME ${name} COMMAND test_${name})
+endfunction()
+
+hms_add_test(common       hms_common)
+hms_add_test(security     hms_security)
+hms_add_test(storage      hms_storage)
+hms_add_test(auth         hms_auth)
+hms_add_test(patient      hms_patient)
+hms_add_test(doctor       hms_doctor)
+hms_add_test(appointment  hms_appointment)
+hms_add_test(billing      hms_billing)
+hms_add_test(report       hms_report)
+hms_add_test(cli          hms_cli)
+hms_add_test(integration  hms_cli)
