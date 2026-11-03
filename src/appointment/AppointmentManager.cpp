@@ -21,21 +21,25 @@ Result<Appointment> AppointmentManager::book(
     const std::string& reason) {
 
     if (!patients_.exists(patientId)) {
-        return Result<Appointment>::failure("Patient does not exist");
+        return Result<Appointment>::failure("Patient does not exist.");
     }
 
     if (!doctors_.exists(doctorId)) {
-        return Result<Appointment>::failure("Doctor does not exist");
+        return Result<Appointment>::failure("Doctor does not exist.");
+    }
+
+    if (slot.date.empty() || slot.time.empty()) {
+        return Result<Appointment>::failure("Date and time are required.");
     }
 
     if (!doctors_.worksAt(doctorId, slot)) {
         return Result<Appointment>::failure(
-            "Doctor is unavailable at the requested time");
+            "Doctor is unavailable at the selected time.");
     }
 
     if (!isSlotFree(doctorId, slot)) {
         return Result<Appointment>::failure(
-            "Doctor already has an appointment at this time");
+            "Doctor already has an appointment at this time.");
     }
 
     Appointment appointment;
@@ -47,6 +51,7 @@ Result<Appointment> AppointmentManager::book(
     appointment.status = AppointmentStatus::Scheduled;
 
     appointments_.push_back(appointment);
+
     return Result<Appointment>::success(appointment);
 }
 
@@ -58,12 +63,12 @@ Status AppointmentManager::cancel(Id appointmentId) {
         });
 
     if (it == appointments_.end()) {
-        return Status::failure("Appointment not found");
+        return Status::failure("Appointment not found.");
     }
 
     if (it->status != AppointmentStatus::Scheduled) {
         return Status::failure(
-            "Only scheduled appointments can be cancelled");
+            "Only scheduled appointments can be cancelled.");
     }
 
     it->status = AppointmentStatus::Cancelled;
@@ -71,7 +76,8 @@ Status AppointmentManager::cancel(Id appointmentId) {
 }
 
 Status AppointmentManager::reschedule(
-    Id appointmentId, const TimeSlot& newSlot) {
+    Id appointmentId,
+    const TimeSlot& newSlot) {
 
     auto it = std::find_if(
         appointments_.begin(), appointments_.end(),
@@ -80,31 +86,31 @@ Status AppointmentManager::reschedule(
         });
 
     if (it == appointments_.end()) {
-        return Status::failure("Appointment not found");
+        return Status::failure("Appointment not found.");
     }
 
     if (it->status != AppointmentStatus::Scheduled) {
         return Status::failure(
-            "Only scheduled appointments can be rescheduled");
+            "Only scheduled appointments can be rescheduled.");
+    }
+
+    if (newSlot.date.empty() || newSlot.time.empty()) {
+        return Status::failure("Date and time are required.");
     }
 
     if (!doctors_.worksAt(it->doctorId, newSlot)) {
         return Status::failure(
-            "Doctor is unavailable at the requested time");
+            "Doctor is unavailable at the selected time.");
     }
 
-    const bool conflict = std::any_of(
-        appointments_.begin(), appointments_.end(),
-        [&](const Appointment& other) {
-            return other.id != appointmentId &&
-                   other.doctorId == it->doctorId &&
-                   other.slot == newSlot &&
-                   other.status == AppointmentStatus::Scheduled;
-        });
-
-    if (conflict) {
-        return Status::failure(
-            "Doctor already has an appointment at this time");
+    for (const auto& appointment : appointments_) {
+        if (appointment.id != appointmentId &&
+            appointment.doctorId == it->doctorId &&
+            appointment.slot == newSlot &&
+            appointment.status == AppointmentStatus::Scheduled) {
+            return Status::failure(
+                "Doctor already has an appointment at this time.");
+        }
     }
 
     it->slot = newSlot;
@@ -119,12 +125,12 @@ Status AppointmentManager::markCompleted(Id appointmentId) {
         });
 
     if (it == appointments_.end()) {
-        return Status::failure("Appointment not found");
+        return Status::failure("Appointment not found.");
     }
 
     if (it->status != AppointmentStatus::Scheduled) {
         return Status::failure(
-            "Only scheduled appointments can be completed");
+            "Only scheduled appointments can be marked completed.");
     }
 
     it->status = AppointmentStatus::Completed;
@@ -132,11 +138,12 @@ Status AppointmentManager::markCompleted(Id appointmentId) {
 }
 
 bool AppointmentManager::isSlotFree(
-    Id doctorId, const TimeSlot& slot) const {
+    Id doctorId,
+    const TimeSlot& slot) const {
 
     return std::none_of(
         appointments_.begin(), appointments_.end(),
-        [&](const Appointment& a) {
+        [doctorId, &slot](const Appointment& a) {
             return a.doctorId == doctorId &&
                    a.slot == slot &&
                    a.status == AppointmentStatus::Scheduled;
@@ -157,9 +164,7 @@ std::optional<Appointment> AppointmentManager::findById(Id id) const {
     return *it;
 }
 
-std::vector<Appointment> AppointmentManager::forPatient(
-    Id patientId) const {
-
+std::vector<Appointment> AppointmentManager::forPatient(Id patientId) const {
     std::vector<Appointment> result;
 
     for (const auto& a : appointments_) {
@@ -199,8 +204,8 @@ std::vector<Appointment> AppointmentManager::onDate(
 
 void AppointmentManager::replaceAll(std::vector<Appointment> items) {
     appointments_ = std::move(items);
-    nextId_ = 1;
 
+    nextId_ = 1;
     for (const auto& a : appointments_) {
         nextId_ = std::max(nextId_, a.id + 1);
     }
