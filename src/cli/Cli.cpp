@@ -9,7 +9,9 @@
 namespace hms {
 
 int runCli(AppContext& ctx, std::istream& in, std::ostream& out) {
-    // TODO(Pranav Swaroop): load data via ctx.storage on start, require Auth login, save on exit.
+    // Load existing data from storage (missing files succeed with empty data)
+    ctx.loadAll();
+
     std::string choice;
     while (true) {
         out << "\n=== Hospital Management System ===\n"
@@ -25,6 +27,9 @@ int runCli(AppContext& ctx, std::istream& in, std::ostream& out) {
         else out << "Invalid choice, please try again.\n";
     }
     out << "Goodbye.\n";
+
+    // Save state on exit
+    ctx.saveAll();
     return 0;
 }
 
