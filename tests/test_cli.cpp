@@ -48,14 +48,26 @@ int main() {
         CHECK(out.str().find("Administration") != std::string::npos);
     }
 
-    // 5. Admin menu user registration and login
+    // 5. Admin menu: view current user and list users when none registered
     {
         hms::AppContext ctx(testDir);
-        // Choice 6 (Admin) -> Choice 3 (Register) -> user1, pass1, role 1 (Admin) -> 0 (Back) -> 0 (Exit)
-        std::istringstream in("6\n3\nadmin_test\nsecure_pass\n1\n0\n0\n");
+        // Choice 6 (Admin) -> Choice 4 (View current user) -> Choice 5 (List all) -> 0 (Back) -> 0 (Exit)
+        std::istringstream in("6\n4\n5\n0\n0\n");
         std::ostringstream out;
         CHECK(hms::runCli(ctx, in, out) == 0);
-        CHECK(out.str().find("registered successfully") != std::string::npos);
+        CHECK(out.str().find("No user is currently logged in.") != std::string::npos);
+        CHECK(out.str().find("No users registered yet.") != std::string::npos);
+    }
+
+    // 6. Billing menu: view invoices and balance when empty
+    {
+        hms::AppContext ctx(testDir);
+        // Choice 4 (Billing) -> Choice 6 (View all) -> Choice 5 (Outstanding for patient 1) -> 0 (Back) -> 0 (Exit)
+        std::istringstream in("4\n6\n5\n1\n0\n0\n");
+        std::ostringstream out;
+        CHECK(hms::runCli(ctx, in, out) == 0);
+        CHECK(out.str().find("No invoices recorded.") != std::string::npos);
+        CHECK(out.str().find("Outstanding balance for patient 1: 0 cents") != std::string::npos);
     }
 
     std::filesystem::remove_all(testDir, ec);
