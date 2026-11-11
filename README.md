@@ -96,3 +96,31 @@ The application uses the FileHandler component to persist hospital records betwe
 ## Password Security
 
 The Security component provides password hashing and verification functions used by the Authentication module. Passwords are converted into a self-contained stored hash representation rather than being stored directly as plain text. During login, the verification function checks the entered password against the stored representation.
+
+## Command-Line Interface
+
+The application provides a menu-driven command-line interface for accessing its hospital management features. Separate menu functions handle patient records, doctor management, appointment scheduling, billing, reports, and administration. Input and output streams are passed to these functions explicitly, allowing menu interactions to be tested without relying directly on standard console streams.
+
+## Appointment Lifecycle
+
+The Appointment Management module handles the complete lifecycle of hospital appointments. It supports booking, cancellation, rescheduling, and marking appointments as completed. Before booking, it checks that the patient and doctor exist, that the doctor is working during the requested time slot, and that the slot is available. It also provides appointment searches by patient, doctor, ID, and date.
+
+## Doctor Availability and Working Hours
+
+Doctor records include specialization, working hours, and an availability status. The system represents working hours using start and end times, with the start time inclusive and the end time exclusive. Doctors can be marked unavailable when they are not taking appointments. Appointment scheduling uses this information when checking whether a doctor can accept a requested time slot.
+
+## Shared Data Models
+
+The project defines common data structures in `Types.h` to maintain consistency across its modules. These structures represent users, patients, doctors, appointments, invoices, and appointment time slots. Each record uses an ID assigned by its managing component. Enumerations represent user roles, appointment states, and invoice payment states, providing consistent values throughout the application.
+
+## Input Validation
+
+The application validates data before accepting changes to its records. Manager classes check whether referenced IDs exist and whether supplied values meet the required conditions. For example, appointment booking verifies the patient, doctor, doctor's working availability, and requested time slot before creating an appointment. These checks help prevent invalid or conflicting records.
+
+## Invoice and Payment Status
+
+Each invoice is associated with a patient and an appointment. The billing module tracks invoices using two payment states: Unpaid and Paid. When an invoice is marked as paid, its status is updated accordingly. The module can also calculate outstanding amounts by adding the values of unpaid invoices, while keeping monetary amounts stored as integer cents.
+
+## Automated Testing and Build System
+
+The project uses CMake to configure and build the application and its test targets. The test suite checks the behaviour of individual modules and their integration, helping identify regressions when functionality changes. CTest is used to execute the registered tests and report their results.
