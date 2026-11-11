@@ -56,3 +56,7 @@ The Doctor Management module maintains doctor records, including names, speciali
 ## Report Generation
 
 The Report Generation module provides summaries of hospital activity through patient reports, appointment reports, and doctor schedule reports. These reports help users review patient records, track appointments, and understand doctors' schedules from the command-line interface.
+
+## Error Handling
+
+The application uses a common status and result handling approach to communicate operation outcomes. Managers return structured results so that the command-line interface can distinguish successful operations from validation failures, missing records, and other errors.
