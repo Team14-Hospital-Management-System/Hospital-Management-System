@@ -84,3 +84,7 @@ The Authentication module manages user accounts and login sessions. It supports 
 ## Patient Management
 
 The Patient Management module maintains patient records within the hospital system. It supports registering new patients with automatically assigned IDs, updating existing records, checking whether a patient exists, and retrieving records by ID. It also provides case-insensitive name searching to help locate patients efficiently.
+
+## Billing and Invoice Management
+
+The Billing module manages invoices associated with patients and appointments. It supports creating invoices with positive amounts, marking invoices as paid, and retrieving invoice details by ID or patient ID. It also provides separate queries for paid and unpaid invoices, calculates outstanding balances for individual patients, and reports total revenue.
