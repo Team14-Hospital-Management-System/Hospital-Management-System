@@ -108,3 +108,7 @@ The Appointment Management module handles the complete lifecycle of hospital app
 ## Doctor Availability and Working Hours
 
 Doctor records include specialization, working hours, and an availability status. The system represents working hours using start and end times, with the start time inclusive and the end time exclusive. Doctors can be marked unavailable when they are not taking appointments. Appointment scheduling uses this information when checking whether a doctor can accept a requested time slot.
+
+## Shared Data Models
+
+The project defines common data structures in `Types.h` to maintain consistency across its modules. These structures represent users, patients, doctors, appointments, invoices, and appointment time slots. Each record uses an ID assigned by its managing component. Enumerations represent user roles, appointment states, and invoice payment states, providing consistent values throughout the application.
