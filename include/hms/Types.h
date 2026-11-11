@@ -28,6 +28,7 @@ struct User {
     std::string username;
     std::string passwordHash;   // produced by hms::hashPassword (Security.h) - never plain text
     Role role = Role::Receptionist;
+    bool enabled = true;          // disabled accounts cannot authenticate
 };
 
 struct Patient {
