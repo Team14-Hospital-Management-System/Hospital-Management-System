@@ -77,7 +77,7 @@ int main() {
             CHECK(seed.saveAll().ok);
         }
         hms::AppContext ctx(testDir);
-        std::istringstream in("6\\n1\\ndoctor\\ndoctor-pass\\n0\\n3\\n0\\n");
+        std::istringstream in("6\n1\ndoctor\ndoctor-pass\n0\n3\n0\n");
         std::ostringstream out;
         CHECK(hms::runCli(ctx, in, out) == 0);
         CHECK(out.str().find("Access denied: your account role cannot open this module.") != std::string::npos);
