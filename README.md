@@ -88,3 +88,7 @@ The Patient Management module maintains patient records within the hospital syst
 ## Billing and Invoice Management
 
 The Billing module manages invoices associated with patients and appointments. It supports creating invoices with positive amounts, marking invoices as paid, and retrieving invoice details by ID or patient ID. It also provides separate queries for paid and unpaid invoices, calculates outstanding balances for individual patients, and reports total revenue.
+
+## File-Based Data Storage
+
+The application uses the FileHandler component to persist hospital records between sessions. It stores users, patients, doctors, appointments, and invoices in separate files within a configured data directory. The component provides dedicated save and load operations for each record type and can create the data directory when required. A missing data file is handled as an empty collection rather than an error.
