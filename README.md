@@ -120,3 +120,7 @@ The application validates data before accepting changes to its records. Manager 
 ## Invoice and Payment Status
 
 Each invoice is associated with a patient and an appointment. The billing module tracks invoices using two payment states: Unpaid and Paid. When an invoice is marked as paid, its status is updated accordingly. The module can also calculate outstanding amounts by adding the values of unpaid invoices, while keeping monetary amounts stored as integer cents.
+
+## Automated Testing and Build System
+
+The project uses CMake to configure and build the application and its test targets. The test suite checks the behaviour of individual modules and their integration, helping identify regressions when functionality changes. CTest is used to execute the registered tests and report their results.
