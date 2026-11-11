@@ -68,6 +68,21 @@ int main() {
         CHECK(out.str().find("cannot open this module") != std::string::npos);
     }
 
+    // Doctor accounts are not granted the broad appointment menu until doctor-profile scoping exists.
+    {
+        std::filesystem::remove_all(testDir, ec);
+        {
+            hms::AppContext seed(testDir);
+            CHECK(seed.auth.registerUser("doctor", "doctor-pass", hms::Role::Doctor).ok);
+            CHECK(seed.saveAll().ok);
+        }
+        hms::AppContext ctx(testDir);
+        std::istringstream in("6\\n1\\ndoctor\\ndoctor-pass\\n0\\n3\\n0\\n");
+        std::ostringstream out;
+        CHECK(hms::runCli(ctx, in, out) == 0);
+        CHECK(out.str().find("Access denied: your account role cannot open this module.") != std::string::npos);
+    }
+
     std::filesystem::remove_all(testDir, ec);
     return TEST_RESULT();
 }
