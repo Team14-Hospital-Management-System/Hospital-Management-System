@@ -112,3 +112,7 @@ Doctor records include specialization, working hours, and an availability status
 ## Shared Data Models
 
 The project defines common data structures in `Types.h` to maintain consistency across its modules. These structures represent users, patients, doctors, appointments, invoices, and appointment time slots. Each record uses an ID assigned by its managing component. Enumerations represent user roles, appointment states, and invoice payment states, providing consistent values throughout the application.
+
+## Input Validation
+
+The application validates data before accepting changes to its records. Manager classes check whether referenced IDs exist and whether supplied values meet the required conditions. For example, appointment booking verifies the patient, doctor, doctor's working availability, and requested time slot before creating an appointment. These checks help prevent invalid or conflicting records.
