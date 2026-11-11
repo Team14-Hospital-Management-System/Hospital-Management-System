@@ -1,6 +1,11 @@
 # Hospital Management System (C++17, CLI)
 
-University software engineering project. **All test and sample data must be fictional never commit real patient data.**
+University software engineering project developed using C++17 with a command-line interface (CLI). The system provides a modular approach to managing hospital operations, including authentication, patient management, doctor management, appointment scheduling, report management, billing, administration, security, and storage. Each module is developed independently and integrated through predefined interfaces to ensure maintainability and consistency.
+
+**All test and sample data must be fictional. Never commit real patient data or personally identifiable medical information.**
+
+
+
 
 ## Build and test
 
