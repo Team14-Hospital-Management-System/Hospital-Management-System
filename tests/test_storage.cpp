@@ -144,6 +144,30 @@ int main() {
         CHECK(loaded[1].id == 2 && loaded[1].amountCents == 2500 && loaded[1].status == hms::InvoiceStatus::Paid);
     }
 
+    // 8. Delimiter escaping and special characters resilience
+    {
+        std::vector<hms::Patient> specialPatients;
+        hms::Patient pSpecial;
+        pSpecial.id = 99;
+        pSpecial.name = "Patient with | Pipes and \\ Backslashes";
+        pSpecial.age = 28;
+        pSpecial.gender = "Non-Binary";
+        pSpecial.phone = "+1 (555) 012-3456";
+        pSpecial.address = "Apt 4B | 123 Main St, Suite #9 \\ East Wing";
+        pSpecial.medicalNotes = "Line 1: Note\nLine 2: Pipe | and Slash \\ details\rLine 3: Finished.";
+        specialPatients.push_back(pSpecial);
+
+        CHECK(fh.savePatients(specialPatients).ok);
+
+        std::vector<hms::Patient> loadedSpecial;
+        CHECK(fh.loadPatients(loadedSpecial).ok);
+        CHECK(loadedSpecial.size() == 1);
+        CHECK(loadedSpecial[0].id == 99);
+        CHECK(loadedSpecial[0].name == pSpecial.name);
+        CHECK(loadedSpecial[0].address == pSpecial.address);
+        CHECK(loadedSpecial[0].medicalNotes == pSpecial.medicalNotes);
+    }
+
     // Cleanup
     std::filesystem::remove_all(testDir, ec);
     return TEST_RESULT();

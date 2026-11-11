@@ -20,6 +20,11 @@ public:
     std::vector<Invoice> forPatient(Id patientId) const;
     long long outstandingCents(Id patientId) const;   // sum of Unpaid invoices
 
+    // Filtered queries and revenue reporting
+    std::vector<Invoice> unpaidForPatient(Id patientId) const;
+    std::vector<Invoice> paidForPatient(Id patientId) const;
+    long long totalRevenueCents() const;
+
     const std::vector<Invoice>& all() const { return invoices_; }
     void replaceAll(std::vector<Invoice> items);
 
