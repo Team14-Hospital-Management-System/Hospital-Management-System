@@ -25,6 +25,7 @@ code .
 If the folder already exists:
 
 ```powershell
+git checkout main
 git pull origin main
 code .
 ```
@@ -39,7 +40,7 @@ cmake --build build --config Debug
 ctest --test-dir build -C Debug --output-on-failure
 ```
 
-Expected test summary on the current CI baseline: **11/11 tests passed**. After the authentication/admin-access changes in PR #8 are merged, use the updated CI result as the source of truth.
+The CMake test suite currently registers 11 CTest entries: common, security, storage, auth, patient, doctor, appointment, billing, report, cli, and integration. The latest verified GitHub Actions run on the security/admin PR head completed both Ubuntu and Windows jobs successfully. See [the CI run](https://github.com/Team14-Hospital-Management-System/Hospital-Management-System/actions/runs/42962221644) for the authoritative result. Your local test count should show 11 tests; do not assume the build passed until the commands finish on your machine.
 
 ## 4. Run the application
 
@@ -61,26 +62,27 @@ You can supply a custom data directory as the first argument:
 .\build\src\Debug\hms.exe .\demo-data
 ```
 
-## 5. First launch and demo data
+## 5. First launch and demo flow
 
 On a fresh data directory:
-1. Choose **Administration / Login**.
-2. Choose **Register user** to create the first administrator account.
-3. Use a throwaway demo username and password. Do not use a personal or reused password.
-4. Return to Administration and log in with that administrator.
-5. Open Patient Management and register a fictional patient.
-6. Open Doctor Management (Admin only) and add a fictional doctor with a working time such as 09:00–17:00.
-7. Open Appointment Management and book an available slot for the patient and doctor.
-8. Try booking the same doctor/time again; it should be rejected.
-9. Open Billing and create an invoice for the patient.
-10. Open Reports to show the patient report, appointment report, and doctor schedule.
-11. Exit using 0 so the application saves the data.
+1. Open **Administration / Login**.
+2. Register the first administrator. There are no default credentials.
+3. Log in using the demo administrator account you just created.
+4. Open Patient Management and register a fictional patient.
+5. Open Doctor Management as Admin and add a fictional doctor with working hours such as 09:00–17:00.
+6. Open Appointment Management and book an available slot for the patient and doctor.
+7. Try booking the same doctor/time again; the conflicting booking should be rejected.
+8. Open Billing and create an invoice for the patient; demonstrate the payment-status flow.
+9. Open Reports as Admin and show the available reports.
+10. Exit normally so the application can save its data.
+
+Access is role-gated. Admin has access to all implemented modules. Receptionist can use patient, appointment, and billing modules. Doctor accounts can log in but are deliberately blocked from the general appointment menu until a doctor account can be safely linked to one specific doctor record. Reports and doctor administration are Admin-only. Do not demonstrate a module as a Doctor user if the current implementation denies that access.
 
 Use only fictional patient and doctor data. Do not enter real patient health information.
 
 ## 6. Where data is stored
 
-The default directory is `data/` beside the executable's working directory. It contains local text files for users, patients, doctors, appointments, and invoices. Administrative user creation/disable actions are written to `audit.log`.
+The application uses local text-file storage under its data directory (by default, `data/` relative to the process working directory). Administrative user creation and account disabling are appended to `audit.log`.
 
 These files are local demo storage, not encrypted production medical records. Do not commit the `data/` directory or share it publicly.
 
@@ -89,4 +91,9 @@ These files are local demo storage, not encrypted production medical records. Do
 - **'cmake' is not recognized**: install CMake and restart VS Code.
 - **No C++ compiler found**: install the Visual Studio C++ workload and restart VS Code.
 - **Executable path not found**: check whether CMake generated Visual Studio output (`build/src/Debug/hms.exe`) or a single-config output (`build/src/hms.exe`).
-- **Tests fail**: copy the full output from `ctest --test-dir build -C Debug --output-on-failure`; do not merge code with a failing required CI check.
+- **Tests fail**: copy the complete output from `ctest --test-dir build -C Debug --output-on-failure`. Do not merge code with a failing required CI check.
+- **Login fails after a previous demo**: the user database persists. Use the account created for that data directory, or run with a new empty demo data directory.
+
+## 8. Honest scope statement for the presentation
+
+This is an academic CLI prototype, not a production hospital information system. Patient login/personal record access and doctor-to-doctor-profile schedule scoping are not complete. Local text files are not encrypted, and the included password hashing is educational rather than production-grade. Performance, availability, and usability targets have not been formally measured. See [the SRS implementation status](SRS_IMPLEMENTATION_STATUS.md) for the detailed requirement matrix.
