@@ -44,10 +44,26 @@ Status Auth::login(const std::string& username, const std::string& password) {
     const auto found = std::find_if(users_.begin(), users_.end(), [&](const User& user) {
         return normalized(user.username) == key;
     });
-    if (found == users_.end() || !verifyPassword(password, found->passwordHash)) {
+    if (found == users_.end() || !found->enabled || !verifyPassword(password, found->passwordHash)) {
         return Status::failure("Invalid username or password.");
     }
     currentUserId_ = found->id;
+    return Status::success();
+}
+
+Status Auth::disableUser(Id userId) {
+    if (!hasRole(Role::Admin)) return Status::failure("Only an administrator can disable accounts.");
+    auto found = std::find_if(users_.begin(), users_.end(),
+        [userId](const User& user) { return user.id == userId; });
+    if (found == users_.end()) return Status::failure("User not found.");
+    if (!found->enabled) return Status::failure("User account is already disabled.");
+    if (found->id == currentUserId_) return Status::failure("You cannot disable your own account.");
+    if (found->role == Role::Admin) {
+        const auto activeAdmins = std::count_if(users_.begin(), users_.end(),
+            [](const User& user) { return user.enabled && user.role == Role::Admin; });
+        if (activeAdmins <= 1) return Status::failure("The last active administrator cannot be disabled.");
+    }
+    found->enabled = false;
     return Status::success();
 }
 

@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "HMS: Configure",
+      "type": "shell",
+      "command": "cmake",
+      "args": ["-S", ".", "-B", "build"],
+      "problemMatcher": []
+    },
+    {
+      "label": "HMS: Build",
+      "type": "shell",
+      "command": "cmake",
+      "args": ["--build", "build", "--config", "Debug"],
+      "dependsOn": "HMS: Configure",
+      "problemMatcher": ["$msCompile"]
+    },
+    {
+      "label": "HMS: Test",
+      "type": "shell",
+      "command": "ctest",
+      "args": ["--test-dir", "build", "-C", "Debug", "--output-on-failure"],
+      "dependsOn": "HMS: Build",
+      "problemMatcher": []
+    },
+    {
+      "label": "HMS: Run",
+      "type": "shell",
+      "command": ".\\build\\src\\Debug\\hms.exe",
+      "dependsOn": "HMS: Build",
+      "problemMatcher": []
+    }
+  ]
+}
