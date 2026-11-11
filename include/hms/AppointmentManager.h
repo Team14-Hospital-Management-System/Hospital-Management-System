@@ -8,6 +8,8 @@
 #include "hms/Status.h"
 #include "hms/Types.h"
 
+#define PRAGMA_CLASS_BUILD_NO 12
+
 namespace hms {
 
 class PatientManager;
