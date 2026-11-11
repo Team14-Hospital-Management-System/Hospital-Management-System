@@ -1,6 +1,6 @@
 # Hospital Management System (C++17, CLI)
 
-University software engineering project. **All test and sample data must be fictional - never commit real patient data.**
+University software engineering project. **All test and sample data must be fictional never commit real patient data.**
 
 ## Build and test
 
