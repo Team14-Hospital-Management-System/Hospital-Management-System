@@ -2,6 +2,7 @@
 // Tiny test helper: no external framework needed.
 //   CHECK(cond);        records a failure (with file:line) but keeps running
 //   return TEST_RESULT();   at the end of main(): 0 = pass, 1 = fail (CTest reads this)
+// TestHelper.h
 #include <iostream>
 
 namespace hms_test {
