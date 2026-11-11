@@ -16,6 +16,6 @@ Status DoctorManager::setAvailability(Id id,bool a){auto i=std::find_if(doctors_
 bool DoctorManager::exists(Id id)const{return std::any_of(doctors_.begin(),doctors_.end(),[&](const Doctor&d){return d.id==id;});}
 std::optional<Doctor> DoctorManager::findById(Id id)const{auto i=std::find_if(doctors_.begin(),doctors_.end(),[&](const Doctor&d){return d.id==id;});if(i==doctors_.end())return {};return *i;}
 std::vector<Doctor> DoctorManager::findBySpecialization(const std::string&q)const{std::vector<Doctor>r;for(auto&d:doctors_)if(d.specialization.find(q)!=std::string::npos)r.push_back(d);return r;}
-bool DoctorManager::worksAt(Id id,const TimeSlot&s)const{auto d=findById(id);return d&&d->available&&s.date.size()==10&&s.time.size()==5&&s.date[4]=='-'&&s.date[7]=='-'&&s.time>="00:00"&&s.time<="23:59"&&s.time>=d->workStart&&s.time<d->workEnd;}
+bool DoctorManager::worksAt(Id id,const TimeSlot&s)const{auto d=findById(id);return d&&d->available&&s.date.size()==10&&s.date[4]=='-'&&s.date[7]=='-'&&validTime(s.time)&&s.time>="00:00"&&s.time<="23:59"&&s.time>=d->workStart&&s.time<d->workEnd;}
 void DoctorManager::replaceAll(std::vector<Doctor>v){doctors_=std::move(v);nextId_=1;for(auto&d:doctors_)nextId_=std::max(nextId_,d.id+1);}
 }
