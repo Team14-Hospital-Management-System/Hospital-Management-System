@@ -80,3 +80,7 @@ The application follows a modular architecture coordinated through the `AppConte
 ## Authentication and User Access
 
 The Authentication module manages user accounts and login sessions. It supports user registration, login, logout, and disabling user accounts. The system also provides methods to check whether a user is logged in, retrieve the current user, and verify whether the current user has a required role. These operations help control access to application features based on user roles.
+
+## Patient Management
+
+The Patient Management module maintains patient records within the hospital system. It supports registering new patients with automatically assigned IDs, updating existing records, checking whether a patient exists, and retrieving records by ID. It also provides case-insensitive name searching to help locate patients efficiently.
