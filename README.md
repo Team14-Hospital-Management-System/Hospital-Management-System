@@ -72,3 +72,7 @@ The Appointment Management module coordinates appointment records between patien
 ## Patient Reports
 
 Patient reports provide a consolidated view of patient-related information maintained by the system. They help staff review registered patient records through the reporting interface without directly accessing internal storage structures.
+
+## Application Architecture
+
+The application follows a modular architecture coordinated through the `AppContext` structure. It initializes and connects authentication, patient management, doctor management, appointment scheduling, billing, reporting, and file storage components. Modules that depend on other managers receive references through the application context, reducing unnecessary coupling. The `loadAll()` and `saveAll()` methods coordinate loading and saving application records while checking operation status at each stage.
