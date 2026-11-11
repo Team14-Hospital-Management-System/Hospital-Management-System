@@ -1,8 +1,11 @@
 # Hospital Management System (C++17, CLI)
 
-University software engineering project. **All test and sample data must be fictional - never commit real patient data.**
+University software engineering project. **All test and sample data must be fictional never commit real patient data.**
 
 ## Build and test
+
+For the complete Windows + VS Code setup, first-run administrator creation, and demo flow, see [the demo guide](docs/DEMO_GUIDE_WINDOWS_VSCODE.md). The repository also includes VS Code tasks under `.vscode/tasks.json` for configure, build, test, and run. See [the SRS implementation status](docs/SRS_IMPLEMENTATION_STATUS.md) for verified features and remaining gaps, the [manual QA checklist](docs/MANUAL_QA_CHECKLIST.md) for repeatable demo tests, and [CONTRIBUTING.md](CONTRIBUTING.md) for the team PR workflow.
+
 
 Ubuntu / Linux / macOS (needs CMake >= 3.20 and g++ or clang++):
 
