@@ -72,3 +72,27 @@ The Appointment Management module coordinates appointment records between patien
 ## Patient Reports
 
 Patient reports provide a consolidated view of patient-related information maintained by the system. They help staff review registered patient records through the reporting interface without directly accessing internal storage structures.
+
+## Application Architecture
+
+The application follows a modular architecture coordinated through the `AppContext` structure. It initializes and connects authentication, patient management, doctor management, appointment scheduling, billing, reporting, and file storage components. Modules that depend on other managers receive references through the application context, reducing unnecessary coupling. The `loadAll()` and `saveAll()` methods coordinate loading and saving application records while checking operation status at each stage.
+
+## Authentication and User Access
+
+The Authentication module manages user accounts and login sessions. It supports user registration, login, logout, and disabling user accounts. The system also provides methods to check whether a user is logged in, retrieve the current user, and verify whether the current user has a required role. These operations help control access to application features based on user roles.
+
+## Patient Management
+
+The Patient Management module maintains patient records within the hospital system. It supports registering new patients with automatically assigned IDs, updating existing records, checking whether a patient exists, and retrieving records by ID. It also provides case-insensitive name searching to help locate patients efficiently.
+
+## Billing and Invoice Management
+
+The Billing module manages invoices associated with patients and appointments. It supports creating invoices with positive amounts, marking invoices as paid, and retrieving invoice details by ID or patient ID. It also provides separate queries for paid and unpaid invoices, calculates outstanding balances for individual patients, and reports total revenue.
+
+## File-Based Data Storage
+
+The application uses the FileHandler component to persist hospital records between sessions. It stores users, patients, doctors, appointments, and invoices in separate files within a configured data directory. The component provides dedicated save and load operations for each record type and can create the data directory when required. A missing data file is handled as an empty collection rather than an error.
+
+## Password Security
+
+The Security component provides password hashing and verification functions used by the Authentication module. Passwords are converted into a self-contained stored hash representation rather than being stored directly as plain text. During login, the verification function checks the entered password against the stored representation.
