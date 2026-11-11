@@ -100,3 +100,7 @@ The Security component provides password hashing and verification functions used
 ## Command-Line Interface
 
 The application provides a menu-driven command-line interface for accessing its hospital management features. Separate menu functions handle patient records, doctor management, appointment scheduling, billing, reports, and administration. Input and output streams are passed to these functions explicitly, allowing menu interactions to be tested without relying directly on standard console streams.
+
+## Appointment Lifecycle
+
+The Appointment Management module handles the complete lifecycle of hospital appointments. It supports booking, cancellation, rescheduling, and marking appointments as completed. Before booking, it checks that the patient and doctor exist, that the doctor is working during the requested time slot, and that the slot is available. It also provides appointment searches by patient, doctor, ID, and date.
