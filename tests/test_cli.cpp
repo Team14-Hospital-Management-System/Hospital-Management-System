@@ -38,7 +38,7 @@ int main() {
         std::istringstream in("99\n0\n");
         std::ostringstream out;
         CHECK(hms::runCli(ctx, in, out) == 0);
-        CHECK(out.str().find("Invalid choice") != std::string::npos);
+        CHECK(out.str().find("Access denied. Please log in first.") != std::string::npos);
     }
 
     // First-run administrator bootstrap and login.
