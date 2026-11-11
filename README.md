@@ -104,3 +104,7 @@ The application provides a menu-driven command-line interface for accessing its 
 ## Appointment Lifecycle
 
 The Appointment Management module handles the complete lifecycle of hospital appointments. It supports booking, cancellation, rescheduling, and marking appointments as completed. Before booking, it checks that the patient and doctor exist, that the doctor is working during the requested time slot, and that the slot is available. It also provides appointment searches by patient, doctor, ID, and date.
+
+## Doctor Availability and Working Hours
+
+Doctor records include specialization, working hours, and an availability status. The system represents working hours using start and end times, with the start time inclusive and the end time exclusive. Doctors can be marked unavailable when they are not taking appointments. Appointment scheduling uses this information when checking whether a doctor can accept a requested time slot.
