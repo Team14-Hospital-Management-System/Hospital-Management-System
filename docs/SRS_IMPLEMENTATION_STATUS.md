@@ -17,7 +17,7 @@ This matrix is a code-review snapshot for the current integration branch. A pass
 | HMS-F-009 | Prevent double booking | Scheduled doctor/time slot collision rejected. | Unit test exists. |
 | HMS-F-010 | Cancel appointments | Appointment cancellation. | Unit test exists. |
 | HMS-F-011 | Reschedule appointments | Rescheduling validates availability and collisions. | Unit test exists. |
-| HMS-F-012 | Doctors view their appointment schedule | Doctor appointment menu exists, but no account-to-doctor profile association is implemented yet. | Partial; must be completed before claiming role-scoped doctor access. |
+| HMS-F-012 | Doctors view their appointment schedule | Not yet implemented: doctor accounts are deliberately denied the general appointment menu until a doctor-account-to-doctor-record association exists. | Not met; implement profile linkage and a read-only personal schedule view. |
 | HMS-F-013 | Basic billing information | Invoice creation, payment status and outstanding balance. | Unit test exists. |
 | HMS-F-014 | Patient/appointment reports | Patient, appointment-date and doctor schedule reports. | Unit test exists. |
 | HMS-F-015 | Admin creates/disables accounts | First-admin bootstrap, admin-only user creation and account disabling. | Auth tests added; storage round-trip test added. |
@@ -32,8 +32,8 @@ This matrix is a code-review snapshot for the current integration branch. A pass
 | HMS-NF-004 | Data persists and recovers after restart | Local text-file persistence exists. Automated storage tests cover file round trips; full multi-module restart scenario remains to be demonstrated. |
 | HMS-NF-005 | Clear menus and messages | Basic CLI menus exist; usability acceptance requires human evaluation. |
 | HMS-SR-001 | Username/password authentication | Implemented; automated auth tests exist. |
-| HMS-SR-002 | Role-based access for Patient, Doctor, Receptionist, Admin | Admin and Receptionist roles are implemented; Doctor mapping is not scoped to a doctor profile; Patient is not an account role yet. Partial. |
-| HMS-SR-003 | Prevent unauthorized patient-record display | Login and module role gates are present; patient/doctor record-level scoping remains incomplete. Partial. |
+| HMS-SR-002 | Role-based access for Patient, Doctor, Receptionist, Admin | Admin and Receptionist module permissions are implemented; Doctor and Patient self-service mappings are not implemented. Partial. |
+| HMS-SR-003 | Prevent unauthorized patient-record display | Login and module role gates are present; Patient and Doctor record-level scoping remains incomplete. Partial. |
 | HMS-SR-004 | Validate patient and appointment input | Manager-level validation exists, but strict calendar/time validation and complete malformed-input coverage remain. Partial. |
 | HMS-SR-005 | Log important administrative actions | User creation and account disabling append to local `audit.log`. Record deletion is not currently an application operation. Partial. |
 
