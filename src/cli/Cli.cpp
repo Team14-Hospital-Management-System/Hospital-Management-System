@@ -37,7 +37,7 @@ int runCli(AppContext& ctx, std::istream& in, std::ostream& out) {
         }
         if (choice == "1" && allowed(ctx.auth, Role::Receptionist)) runPatientMenu(ctx, in, out);
         else if (choice == "2" && ctx.auth.hasRole(Role::Admin)) runDoctorMenu(ctx, in, out);
-        else if (choice == "3" && (allowed(ctx.auth, Role::Receptionist) || ctx.auth.hasRole(Role::Doctor))) runAppointmentMenu(ctx, in, out);
+        else if (choice == "3" && allowed(ctx.auth, Role::Receptionist)) runAppointmentMenu(ctx, in, out);
         else if (choice == "4" && allowed(ctx.auth, Role::Receptionist)) runBillingMenu(ctx, in, out);
         else if (choice == "5" && ctx.auth.hasRole(Role::Admin)) runReportMenu(ctx, in, out);
         else if (choice == "1" || choice == "2" || choice == "3" || choice == "4" || choice == "5")
