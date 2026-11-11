@@ -40,7 +40,7 @@ The project uses CMake for configuration and compilation
 | AppointmentManager | OP Medha | `AppointmentManager.h`, `src/appointment/`, `src/cli/AppointmentMenu.cpp`, `tests/test_appointment.cpp` |
 | Billing, admin, security, storage, CLI core | Pranav Swaroop | `Billing.h`, `Security.h`, `FileHandler.h`, `AppContext.h`, `Cli.h`, `src/billing/`, `src/security/`, `src/storage/`, `src/cli/Cli.cpp`, `BillingMenu.cpp`, `AdminMenu.cpp`, `src/main.cpp`, matching tests |
 
-## Rules that keep integration painless
+## Rules that keep integration simple
 
 1. **Interface freeze.** `Types.h`, `Status.h` and every public header in `include/hms/` are agreed contracts. Change one only through a PR that all four approve. Adding is fine; renaming or removing is not.
 2. **Stay in your lane.** Edit only your own files and your own `src/<module>/CMakeLists.txt` (add new `.cpp` files there).
