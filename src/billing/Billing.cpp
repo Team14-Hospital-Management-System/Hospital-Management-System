@@ -74,6 +74,36 @@ long long Billing::outstandingCents(Id patientId) const {
     return total;
 }
 
+std::vector<Invoice> Billing::unpaidForPatient(Id patientId) const {
+    std::vector<Invoice> result;
+    for (const auto& inv : invoices_) {
+        if (inv.patientId == patientId && inv.status == InvoiceStatus::Unpaid) {
+            result.push_back(inv);
+        }
+    }
+    return result;
+}
+
+std::vector<Invoice> Billing::paidForPatient(Id patientId) const {
+    std::vector<Invoice> result;
+    for (const auto& inv : invoices_) {
+        if (inv.patientId == patientId && inv.status == InvoiceStatus::Paid) {
+            result.push_back(inv);
+        }
+    }
+    return result;
+}
+
+long long Billing::totalRevenueCents() const {
+    long long total = 0;
+    for (const auto& inv : invoices_) {
+        if (inv.status == InvoiceStatus::Paid) {
+            total += inv.amountCents;
+        }
+    }
+    return total;
+}
+
 void Billing::replaceAll(std::vector<Invoice> items) {
     invoices_ = std::move(items);
     nextId_ = 1;
