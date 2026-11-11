@@ -76,3 +76,7 @@ Patient reports provide a consolidated view of patient-related information maint
 ## Application Architecture
 
 The application follows a modular architecture coordinated through the `AppContext` structure. It initializes and connects authentication, patient management, doctor management, appointment scheduling, billing, reporting, and file storage components. Modules that depend on other managers receive references through the application context, reducing unnecessary coupling. The `loadAll()` and `saveAll()` methods coordinate loading and saving application records while checking operation status at each stage.
+
+## Authentication and User Access
+
+The Authentication module manages user accounts and login sessions. It supports user registration, login, logout, and disabling user accounts. The system also provides methods to check whether a user is logged in, retrieve the current user, and verify whether the current user has a required role. These operations help control access to application features based on user roles.
