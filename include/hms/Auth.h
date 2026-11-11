@@ -13,6 +13,7 @@ class Auth {
 public:
     Status registerUser(const std::string& username, const std::string& password, Role role);
     Status login(const std::string& username, const std::string& password);
+    Status disableUser(Id userId);
     void logout();
 
     bool isLoggedIn() const;
