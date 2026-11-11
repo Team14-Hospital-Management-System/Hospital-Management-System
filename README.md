@@ -64,3 +64,7 @@ The application uses a common status and result handling approach to communicate
 ## Testing
 
 The project includes automated tests to verify individual hospital management modules and their integration. Tests cover core operations, input validation, expected failure cases, and interactions between components. Run the test suite from the project root using CTest after building the application.
+
+## Appointment Scheduling
+
+The Appointment Management module coordinates appointment records between patients and doctors. It uses doctor availability and scheduling information to support appointment creation and management while maintaining consistency across hospital records.
