@@ -50,3 +50,7 @@ MinGW alternative: `cmake -S . -B build -G "MinGW Makefiles"`, then the Ubuntu c
 ## Doctor Management
 
 The Doctor Management module maintains doctor records, including names, specializations, working hours, and availability. It supports adding and updating doctor details, searching by specialization, and checking whether a doctor is available during a requested appointment time.
+
+## Report Generation
+
+The Report Generation module provides summaries of hospital activity through patient reports, appointment reports, and doctor schedule reports. These reports help users review patient records, track appointments, and understand doctors' schedules from the command-line interface.
