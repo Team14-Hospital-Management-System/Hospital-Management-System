@@ -96,3 +96,7 @@ The application uses the FileHandler component to persist hospital records betwe
 ## Password Security
 
 The Security component provides password hashing and verification functions used by the Authentication module. Passwords are converted into a self-contained stored hash representation rather than being stored directly as plain text. During login, the verification function checks the entered password against the stored representation.
+
+## Command-Line Interface
+
+The application provides a menu-driven command-line interface for accessing its hospital management features. Separate menu functions handle patient records, doctor management, appointment scheduling, billing, reports, and administration. Input and output streams are passed to these functions explicitly, allowing menu interactions to be tested without relying directly on standard console streams.
