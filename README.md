@@ -116,3 +116,7 @@ The project defines common data structures in `Types.h` to maintain consistency 
 ## Input Validation
 
 The application validates data before accepting changes to its records. Manager classes check whether referenced IDs exist and whether supplied values meet the required conditions. For example, appointment booking verifies the patient, doctor, doctor's working availability, and requested time slot before creating an appointment. These checks help prevent invalid or conflicting records.
+
+## Invoice and Payment Status
+
+Each invoice is associated with a patient and an appointment. The billing module tracks invoices using two payment states: Unpaid and Paid. When an invoice is marked as paid, its status is updated accordingly. The module can also calculate outstanding amounts by adding the values of unpaid invoices, while keeping monetary amounts stored as integer cents.
