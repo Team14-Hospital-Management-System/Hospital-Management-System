@@ -29,6 +29,8 @@ Windows (PowerShell or Developer Command Prompt, Visual Studio 2019+ with C++ wo
 (Visual Studio is a multi-config generator, so it needs `--config` / `-C`. Single-config generators such as Ubuntu Makefiles ignore them.)
 MinGW alternative: `cmake -S . -B build -G "MinGW Makefiles"`, then the Ubuntu commands.
 
+The project uses CMake for configuration and compilation
+
 ## Ownership
 
 | Module | Owner | Files |
