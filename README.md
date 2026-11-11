@@ -68,3 +68,7 @@ The project includes automated tests to verify individual hospital management mo
 ## Appointment Scheduling
 
 The Appointment Management module coordinates appointment records between patients and doctors. It uses doctor availability and scheduling information to support appointment creation and management while maintaining consistency across hospital records.
+
+## Patient Reports
+
+Patient reports provide a consolidated view of patient-related information maintained by the system. They help staff review registered patient records through the reporting interface without directly accessing internal storage structures.
