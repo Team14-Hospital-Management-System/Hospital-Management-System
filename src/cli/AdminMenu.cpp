@@ -1,6 +1,7 @@
 #include "hms/AppContext.h"
 #include "hms/Cli.h"
 
+#include <algorithm>
 #include <chrono>
 #include <ctime>
 #include <filesystem>
@@ -22,7 +23,7 @@ void audit(const AppContext& ctx, const std::string& action, const std::string& 
     std::ofstream log(path, std::ios::app);
     if (!log) return;
     const auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-    const auto* actor = ctx.auth.currentUser();
+    const auto actor = ctx.auth.currentUser();
     const std::string actorName = actor ? actor->username : "initial-setup";
     const std::tm* local = std::localtime(&now);
     if (local) log << std::put_time(local, "%Y-%m-%d %H:%M:%S");
