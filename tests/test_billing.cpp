@@ -45,15 +45,21 @@ int main() {
     auto p2Invoices = b.forPatient(2);
     CHECK(p2Invoices.empty());
 
-    // 6. outstandingCents
+    // 6. outstandingCents & unpaid queries before payment
     CHECK(b.outstandingCents(1) == 7500);
     CHECK(b.outstandingCents(2) == 0);
+    CHECK(b.unpaidForPatient(1).size() == 2);
+    CHECK(b.paidForPatient(1).empty());
+    CHECK(b.totalRevenueCents() == 0);
 
     // 7. markPaid
     auto payStatus = b.markPaid(1);
     CHECK(payStatus.ok);
     CHECK(b.findById(1)->status == hms::InvoiceStatus::Paid);
     CHECK(b.outstandingCents(1) == 2500);
+    CHECK(b.unpaidForPatient(1).size() == 1);
+    CHECK(b.paidForPatient(1).size() == 1);
+    CHECK(b.totalRevenueCents() == 5000);
 
     // 8. markPaid on already paid invoice fails
     auto payAgain = b.markPaid(1);
@@ -66,6 +72,9 @@ int main() {
     // 10. markPaid on second invoice
     CHECK(b.markPaid(2).ok);
     CHECK(b.outstandingCents(1) == 0);
+    CHECK(b.unpaidForPatient(1).empty());
+    CHECK(b.paidForPatient(1).size() == 2);
+    CHECK(b.totalRevenueCents() == 7500);
 
     // 11. replaceAll and nextId continuity
     hms::Billing restored;
@@ -73,11 +82,14 @@ int main() {
     CHECK(restored.all().size() == 2);
     CHECK(restored.findById(1)->status == hms::InvoiceStatus::Paid);
     CHECK(restored.outstandingCents(1) == 0);
+    CHECK(restored.totalRevenueCents() == 7500);
 
     auto nextInv = restored.createInvoice(2, hms::kInvalidId, 1200, "Pharmacy");
     CHECK(nextInv.ok());
     CHECK(nextInv.value.id == 3);
     CHECK(restored.outstandingCents(2) == 1200);
+    CHECK(restored.unpaidForPatient(2).size() == 1);
+    CHECK(restored.totalRevenueCents() == 7500);
 
     return TEST_RESULT();
 }
