@@ -111,7 +111,8 @@ Status FileHandler::saveUsers(const std::vector<User>& items) const {
         out << u.id << "|"
             << escapeField(u.username) << "|"
             << escapeField(u.passwordHash) << "|"
-            << toString(u.role) << "\n";
+            << toString(u.role) << "|"
+            << (u.enabled ? "1" : "0") << "\n";
     }
 
     if (!out.good()) {
@@ -146,6 +147,8 @@ Status FileHandler::loadUsers(std::vector<User>& out) const {
             u.username = fields[1];
             u.passwordHash = fields[2];
             u.role = parseRole(fields[3]);
+            // Older four-column records remain enabled when loaded.
+            u.enabled = fields.size() < 5 || fields[4] != "0";
             items.push_back(std::move(u));
         } catch (...) {
             return Status::failure("Failed parsing record in " + path.string());
