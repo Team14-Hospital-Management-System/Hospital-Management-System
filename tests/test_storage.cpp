@@ -45,6 +45,7 @@ int main() {
             {2, "doctor_who", "hash2$def", hms::Role::Doctor},
             {3, "front_desk", "hash3$ghi", hms::Role::Receptionist}
         };
+        users[1].enabled = false; // verify account-disable state survives restart
         CHECK(fh.saveUsers(users).ok);
 
         std::vector<hms::User> loaded;
@@ -53,6 +54,9 @@ int main() {
         CHECK(loaded[0].id == 1 && loaded[0].username == "admin" && loaded[0].role == hms::Role::Admin);
         CHECK(loaded[1].id == 2 && loaded[1].username == "doctor_who" && loaded[1].role == hms::Role::Doctor);
         CHECK(loaded[2].id == 3 && loaded[2].username == "front_desk" && loaded[2].role == hms::Role::Receptionist);
+        CHECK(loaded[0].enabled);
+        CHECK(!loaded[1].enabled);
+        CHECK(loaded[2].enabled);
     }
 
     // 4. Patients save and load round-trip
