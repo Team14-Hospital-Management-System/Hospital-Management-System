@@ -92,3 +92,7 @@ The Billing module manages invoices associated with patients and appointments. I
 ## File-Based Data Storage
 
 The application uses the FileHandler component to persist hospital records between sessions. It stores users, patients, doctors, appointments, and invoices in separate files within a configured data directory. The component provides dedicated save and load operations for each record type and can create the data directory when required. A missing data file is handled as an empty collection rather than an error.
+
+## Password Security
+
+The Security component provides password hashing and verification functions used by the Authentication module. Passwords are converted into a self-contained stored hash representation rather than being stored directly as plain text. During login, the verification function checks the entered password against the stored representation.
