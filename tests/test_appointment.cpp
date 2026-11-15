@@ -1,4 +1,5 @@
-// Booking appointments 
+// Booking appointments
+//Reschedule and cancel bookings
 #include "TestHelper.h"
 #include "TestData.h"
 
