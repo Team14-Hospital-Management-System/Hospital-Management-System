@@ -1,4 +1,6 @@
-
+// Booking appointments
+//Reschedule and cancel bookings
+// Handles Invalid IDs
 #include "TestHelper.h"
 #include "TestData.h"
 
